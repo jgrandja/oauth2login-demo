@@ -1,0 +1,8 @@
+= OAuth 2.0 Login Sample
+
+== Run the Sample
+
+. Build the sample -> `./gradlew clean build`
+. Run UAA -> `./gradlew cargoRunLocal`
+. Run the sample -> `./gradlew bootRun`
+. Go to http://localhost:8080 and login to UAA using credentials *springsec5 / password*
