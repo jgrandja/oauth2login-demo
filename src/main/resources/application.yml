@@ -15,6 +15,17 @@ spring:
     oauth2:
       client:
         registration:
+          linkedin:
+            client-id: enter-client-id
+            client-secret: enter-client-secret
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: r_basicprofile, r_emailaddress
+            client-name: Linkedin
+          google:
+            client-id: enter-client-id
+            client-secret: enter-client-secret
           uaa:
             client-id: oauth2login-demo
             client-secret: secret
@@ -24,6 +35,11 @@ spring:
             scope: openid, profile, email
             client-name: UAA
         provider:
+          linkedin:
+            authorization-uri: https://www.linkedin.com/oauth/v2/authorization
+            token-uri: https://www.linkedin.com/oauth/v2/accessToken
+            user-info-uri: https://api.linkedin.com/v1/people/~?format=json
+            user-name-attribute: id
           uaa:
             authorization-uri: http://localhost:8090/uaa/oauth/authorize
             token-uri: http://localhost:8090/uaa/oauth/token
