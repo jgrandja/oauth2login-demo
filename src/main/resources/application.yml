@@ -26,6 +26,9 @@ spring:
           google:
             client-id: enter-client-id
             client-secret: enter-client-secret
+          facebook:
+            client-id: enter-client-id
+            client-secret: enter-client-secret
           uaa:
             client-id: oauth2login-demo
             client-secret: secret
