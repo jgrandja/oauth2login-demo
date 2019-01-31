@@ -13,16 +13,7 @@ repositories {
     mavenCentral()
 }
 
-
-if (System.getenv("TOMCAT_HOME") == null) {
-  ext['tomcatHomeDir'] = '/Users/jgrandja/DevTools/apache-tomcat-8.0.33'
-} else {
-  ext['tomcatHomeDir'] = System.getenv("TOMCAT_HOME");
-}
-
-ext {
-    uaaVersion = '4.20.0'
-}
+ext.uaaVersion = '4.24.0'
 
 configurations {
     uaa
@@ -40,22 +31,30 @@ dependencies {
 
 task downloadUAA(type: Copy) {
     from configurations.uaa
-    into "$projectDir"
+    into "$buildDir"
 }
+
+cargoRunLocal.dependsOn downloadUAA
+
+task uaa(dependsOn: cargoRunLocal) {}
 
 cargo {
     containerId = 'tomcat8x'
     port = 8090
 
     deployable {
-        file = file("cloudfoundry-identity-uaa-${uaaVersion}.war")
+        file = file("$buildDir/cloudfoundry-identity-uaa-${uaaVersion}.war")
         context = 'uaa'
     }
 
     local {
-        homeDir = file("$tomcatHomeDir")
-        outputFile = file('uaa-server.log')
+        outputFile = file("$buildDir/uaa-server.log")
+        installer {
+            installUrl = 'https://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.zip'
 
+            downloadDir = file("$buildDir/download")
+            extractDir = file("$buildDir/extract")
+        }
         systemProperties {
             property "UAA_CONFIG_PATH", "$projectDir"
         }

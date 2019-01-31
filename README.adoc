@@ -1,13 +1,8 @@
 = OAuth 2.0 Login Sample
 
-== Initial Setup
-
-- Set the `ext.tomcatHomeDir` in `uaa/build.gradle` to the local distribution of Tomcat 8.x
-- Download UAA -> `./gradlew -b uaa/build.gradle downloadUAA`
-
 == Run the Sample
 
 . Build the sample -> `./gradlew clean build`
 . Run UAA -> `./gradlew -b uaa/build.gradle cargoRunLocal`
 . Run the sample -> `./gradlew bootRun`
-. Go to http://localhost:8080 and login to UAA using credentials *springsec5 / password*
+. Go to `http://localhost:8080` and login to UAA using *springsec5 / password*
