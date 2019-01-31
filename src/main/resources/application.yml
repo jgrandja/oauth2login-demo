@@ -8,6 +8,15 @@ logging:
     org.springframework.security: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
+## CloudFoundryVcapEnvironmentPostProcessor is an EnvironmentPostProcessor
+## that knows where to find VCAP (a.k.a. Cloud Foundry) meta data in the existing environment.
+## See https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/cloud/CloudFoundryVcapEnvironmentPostProcessor.html
+sso:
+  service:
+    url: ${vcap.services.spring-security-dev-identity.credentials.auth_domain}
+    client-id: ${vcap.services.spring-security-dev-identity.credentials.client_id}
+    client-secret: ${vcap.services.spring-security-dev-identity.credentials.client_secret}
+
 spring:
   thymeleaf:
     cache: false
@@ -16,17 +25,17 @@ spring:
       client:
         registration:
           uaa:
-            client-id: oauth2login-demo
-            client-secret: secret
+            client-id: ${sso.service.client-id}
+            client-secret: ${sso.service.client-secret}
             client-authentication-method: basic
             authorization-grant-type: authorization_code
             redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope: openid, profile, email
+            scope: openid, profile, email, resourceA.read, resourceA.write
             client-name: UAA
         provider:
           uaa:
-            authorization-uri: http://localhost:8090/uaa/oauth/authorize
-            token-uri: http://localhost:8090/uaa/oauth/token
-            user-info-uri: http://localhost:8090/uaa/userinfo
+            authorization-uri: ${sso.service.url}/oauth/authorize
+            token-uri: ${sso.service.url}/oauth/token
+            user-info-uri: ${sso.service.url}/userinfo
             user-name-attribute: sub
-            jwk-set-uri: http://localhost:8090/uaa/token_keys
+            jwk-set-uri: ${sso.service.url}/token_keys

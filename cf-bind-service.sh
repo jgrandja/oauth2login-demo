@@ -1,0 +1,1 @@
+cf bind-service oauth2login-sample spring-security-dev-identity -c '{"grant_types": ["authorization_code"], "scopes": ["openid", "profile", "email", "resourceA.read", "resourceA.write"], "redirect_uris": ["https://oauth2login-sample.cfapps.io/login/oauth2/code/uaa"] }'
