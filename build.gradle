@@ -28,7 +28,8 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-oauth2-client",
             "org.springframework:spring-webflux",
             "org.thymeleaf.extras:thymeleaf-extras-springsecurity5",
-            "io.projectreactor.netty:reactor-netty"
+            "io.projectreactor.netty:reactor-netty",
+            "io.pivotal.cfenv:java-cfenv-boot:1.0.0.RELEASE"
 
     testCompile "org.springframework.boot:spring-boot-starter-test",
                 "org.springframework.security:spring-security-test",

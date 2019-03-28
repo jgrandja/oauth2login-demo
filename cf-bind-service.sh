@@ -1,0 +1,1 @@
+cf bind-service oauth2login-pcf-sso spring-security-dev-identity -c '{"grant_types": ["authorization_code"], "scopes": ["openid", "profile", "email"], "redirect_uris": ["https://oauth2login-pcf-sso.cfapps.io/login/oauth2/code/pcf-sso"] }'
