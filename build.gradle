@@ -14,8 +14,8 @@ repositories {
     maven { url "https://repo.spring.io/libs-snapshot" }
 }
 
-ext.springVersion = '5.2.4.RELEASE'
-ext.springSecurityVersion = '5.3.0.BUILD-SNAPSHOT'
+ext.springVersion = '5.3.0-M1'
+ext.springSecurityVersion = '5.4.0-SNAPSHOT'
 
 dependencies {
     compile "org.springframework:spring-context:$springVersion",
