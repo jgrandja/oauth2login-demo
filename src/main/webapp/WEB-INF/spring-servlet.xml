@@ -1,10 +1,56 @@
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:context="http://www.springframework.org/schema/context"
-		xmlns:mvc="http://www.springframework.org/schema/mvc"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-				http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-				http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+		 xmlns:context="http://www.springframework.org/schema/context"
+		 xmlns:mvc="http://www.springframework.org/schema/mvc"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://www.springframework.org/schema/security"
+		 xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			https://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			https://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/mvc
+			https://www.springframework.org/schema/mvc/spring-mvc.xsd
+			http://www.springframework.org/schema/security
+			https://www.springframework.org/schema/security/spring-security.xsd">
 
 	<context:component-scan base-package="sample"/>
 
-</beans>
+	<mvc:annotation-driven />
+
+	<http auto-config="true">
+		<intercept-url pattern="/**" access="authenticated"/>
+		<oauth2-login authorized-client-repository-ref="authorizedClientRepository"/>
+	</http>
+
+	<client-registrations>
+		<client-registration registration-id="uaa"
+							 client-id="oauth2login-demo"
+							 client-secret="secret"
+							 client-authentication-method="basic"
+							 authorization-grant-type="authorization_code"
+							 redirect-uri="{baseUrl}/login/oauth2/code/{registrationId}"
+							 scope="openid,profile,email"
+							 client-name="UAA"
+							 provider-id="uaa"/>
+		<provider provider-id="uaa"
+				  authorization-uri="http://localhost:8090/uaa/oauth/authorize"
+				  token-uri="http://localhost:8090/uaa/oauth/token"
+				  user-info-uri="http://localhost:8090/uaa/userinfo"
+				  user-info-user-name-attribute="sub"
+				  jwk-set-uri="http://localhost:8090/uaa/token_keys"/>
+	</client-registrations>
+
+	<user-service>
+		<user name="user" password="{noop}password" authorities="ROLE_USER" />
+	</user-service>
+
+	<b:bean id="authorizedClientService"
+			class="org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService"
+			autowire="constructor"/>
+
+	<b:bean id="authorizedClientRepository"
+			class="org.springframework.security.oauth2.client.web.AuthenticatedPrincipalOAuth2AuthorizedClientRepository">
+		<b:constructor-arg ref="authorizedClientService"/>
+	</b:bean>
+
+</b:beans>
