@@ -23,6 +23,24 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid, profile, email
             client-name: UAA
+          curity-login:
+            provider: curity
+            client-id: login-client
+            client-secret: secret
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/login-client"
+            scope: openid, profile, email
+            client-name: Curity Login Client
+          curity-login-mtls:
+            provider: curity-ssl
+            client-id: login-client-mtls
+            client-secret: not-a-valid-secret
+            client-authentication-method: tls_client_auth
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/login-client-mtls"
+            scope: openid
+            client-name: Curity Login mTLS Client
         provider:
           uaa:
             authorization-uri: http://localhost:8090/uaa/oauth/authorize
@@ -30,3 +48,15 @@ spring:
             user-info-uri: http://localhost:8090/uaa/userinfo
             user-name-attribute: sub
             jwk-set-uri: http://localhost:8090/uaa/token_keys
+          curity:
+            authorization-uri: http://localhost:8443/oauth/v2/oauth-authorize
+            token-uri: http://localhost:8443/oauth/v2/oauth-token
+            user-info-uri: http://localhost:8443/oauth/v2/oauth-userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:8443/oauth/v2/oauth-anonymous/jwks
+          curity-ssl:
+            authorization-uri: https://localhost:9443/secure/oauth-authorize
+            token-uri: https://localhost:9443/secure/oauth-token
+            user-info-uri: https://localhost:9443/secure/oauth-userinfo
+            user-name-attribute: sub
+            jwk-set-uri: https://localhost:9443/secure/oauth-anonymous/jwks

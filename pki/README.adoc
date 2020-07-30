@@ -1,0 +1,13 @@
+== PKI Setup
+
+* Generate Keystore for Client
+** Run -> `keytool -genkeypair -alias curity-oauth2-client -keyalg RSA -keysize 4096 -keystore curity-oauth2-client.p12 -storepass secret -storetype pkcs12 -validity 365 -dname "CN=curity-oauth2-client, OU=Sample, O=Test, C=CA"`
+
+* Export Client Certificate
+** Run -> `keytool -export -alias curity-oauth2-client -keystore curity-oauth2-client.p12 -storepass secret -file curity-oauth2-client.cer`
+
+* Import (Trust) Curity Server Certificate to Client Keystore
+** Run -> `keytool -import -alias curity-server-local -file curity-server-local.cer -storetype pkcs12 -keystore curity-oauth2-client.p12`
+
+* Display Curity Server Certificate from Client Keystore
+** Run -> `keytool -list -v -alias curity-server-local -keystore curity-oauth2-client.p12 -storepass secret -storetype pkcs12`

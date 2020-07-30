@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2018 the original author or authors.
+ * Copyright 2002-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ public class WebClientConfig {
 								OAuth2AuthorizedClientRepository authorizedClientRepository) {
 		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
 				clientRegistrationRepository, authorizedClientRepository);
+
+		// TODO Configure ClientHttpConnector with KeyStore
+		// See example -> https://curity.io/resources/tutorials/howtos/writing-clients/oidc-spring-boot-mtls-auth/
+
 		return WebClient.builder()
 				.apply(oauth2.oauth2Configuration())
 				.build();

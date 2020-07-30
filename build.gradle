@@ -27,6 +27,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-starter-oauth2-client",
             "org.springframework:spring-webflux",
+            "org.apache.httpcomponents:httpclient",
             "org.thymeleaf.extras:thymeleaf-extras-springsecurity5",
             "io.projectreactor.netty:reactor-netty"
 
