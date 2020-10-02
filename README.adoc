@@ -1,6 +1,6 @@
-= OAuth 2.0 Login Sample
+=> OAuth 2.0 Login Sample - An Amazing Project
 
-== Run the Sample
+==> Run the Sample
 
 . Build the sample -> `./gradlew clean build`
 . Run UAA -> `./gradlew -b uaa/build.gradle cargoRunLocal`
